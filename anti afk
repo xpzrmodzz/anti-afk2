@@ -33,7 +33,7 @@ TextLabel.Size = UDim2.new(0, 137, 0, 44)
 TextLabel.Font = Enum.Font.SourceSans
 TextLabel.Text = "Anti Afk by FRITE"
 TextLabel.TextColor3 = Color3.fromRGB(186, 186, 186)
-TextLabel.TextSize = 21.000
+TextLabel.TextSize = 17.45
 
 UICorner_2.Parent = TextLabel
 
