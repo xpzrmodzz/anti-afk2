@@ -1,8 +1,7 @@
--- Gui to Lua
+-- GUI to Lua
 -- Version: 3.2
 
 -- Instances:
-
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
@@ -10,7 +9,6 @@ local TextLabel = Instance.new("TextLabel")
 local UICorner_2 = Instance.new("UICorner")
 
 -- Properties:
-
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 Frame.Parent = ScreenGui
@@ -31,7 +29,7 @@ TextLabel.BorderSizePixel = 0
 TextLabel.Position = UDim2.new(0.11594753, 0, 0.129648343, 0)
 TextLabel.Size = UDim2.new(0, 137, 0, 44)
 TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "Anti Afk by FRITE"
+TextLabel.Text = "Anti AFK by FRITE"
 TextLabel.TextColor3 = Color3.fromRGB(186, 186, 186)
 TextLabel.TextSize = 14
 
@@ -45,12 +43,27 @@ game:GetService('Players').LocalPlayer.Idled:Connect(function()
     VirtualUser:ClickButton2(Vector2.new())
 end)
 
--- Scripts:
+-- Keep GUI alive on respawn
+local player = game.Players.LocalPlayer
 
+local function onCharacterAdded(character)
+    -- Make sure the GUI is always in the PlayerGui
+    ScreenGui.Parent = player:WaitForChild("PlayerGui")
+end
+
+-- Connect to the character added event
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Initial connection
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+
+-- Scripts:
 local function EYBWYWQ_fake_script() -- Frame.LocalScript 
     local script = Instance.new('LocalScript', Frame)
 
-    local frame = script.Parent -- Le Frame que vous souhaitez rendre déplaçable
+    local frame = script.Parent -- The Frame you want to make draggable
     local userInputService = game:GetService("UserInputService")
     local isDragging = false
     local dragStart = nil
@@ -61,8 +74,8 @@ local function EYBWYWQ_fake_script() -- Frame.LocalScript
             isDragging = true
             dragStart = input.Position
             startPos = frame.Position
-    
-            -- Connexion à l'événement InputEnded pour arrêter le glissement
+
+            -- Connect to InputEnded event to stop dragging
             userInputService.InputEnded:Connect(function(endInput)
                 if endInput.UserInputType == Enum.UserInputType.MouseButton1 then
                     isDragging = false
@@ -78,7 +91,7 @@ local function EYBWYWQ_fake_script() -- Frame.LocalScript
         end
     end
     
-    -- Connexion des événements d'entrée
+    -- Connect input events
     userInputService.InputBegan:Connect(onInputBegan)
     userInputService.InputChanged:Connect(onInputChanged)
 end
